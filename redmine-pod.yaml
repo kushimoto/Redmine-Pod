@@ -1,0 +1,65 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-4.9.4-rhel
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    bind-mount-options: /opt/redmine-pod/data/app:Z
+  creationTimestamp: "2024-10-07T02:53:09Z"
+  labels:
+    app: Redmine
+  name: Redmine
+spec:
+  containers:
+  - args:
+    - postgres
+    env:
+    - name: POSTGRES_DB
+      value: redmine
+    - name: POSTGRES_USER
+      value: redmine
+    - name: POSTGRES_PASSWORD
+      value: redmine
+    image: docker.io/library/postgres:16.4-bullseye
+    name: db
+    ports:
+    - containerPort: 3000
+      hostPort: 8002
+    volumeMounts:
+    - mountPath: /var/lib/postgresql/data:Z
+      name: opt-redmine-data-db-host-0
+  - args:
+    - rails
+    - server
+    - -b
+    - 0.0.0.0
+    env:
+    - name: REDMINE_DB_PORT
+      value: "5432"
+    - name: REDMINE_DB_PASSWORD
+      value: redmine
+    - name: REDMINE_SECRET_KEY_BASE
+      value: secretkey
+    - name: REDMINE_DB_USERNAME
+      value: redmine
+    - name: REDMINE_DB_POSTGRES
+      value: redmine
+    - name: REDMINE_DB_DATABASE
+      value: redmine
+    image: docker.io/library/redmine:5.1.3
+    name: app
+    volumeMounts:
+    - mountPath: /usr/src/redmine/files:Z
+      name: opt-redmine-data-app-host-0
+  volumes:
+  - hostPath:
+      path: /opt/redmine/data/db
+      type: Directory
+    name: opt-redmine-data-db-host-0
+  - hostPath:
+      path: /opt/redmine/data/app
+      type: Directory
+    name: opt-redmine-data-app-host-0
+

@@ -1,0 +1,12 @@
+[Unit]
+Description=Redmine Pod
+
+[Kube]
+Yaml=/opt/redmine-pod/redmine-pod.yaml
+Network=slirp4netns
+
+[Service]
+Environment="PULL_POLICY=never"
+
+[Install]
+WantedBy=network-online.target
