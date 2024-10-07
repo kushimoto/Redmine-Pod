@@ -16,9 +16,8 @@
 ### コンテナイメージのDL
 以下のイメージを利用しておりますので、予めダウンロードしておきます。
 
-- docker.io/powerdns/pdns-auth-master:latest
-- docker.io/powerdns/pdns-recursor-master:latest
-- docker.io/ngoduykhanh/powerdns-admin:v0.3.0
+- docker.io/library/redmine:5.1.3
+- docker.io/library/postgres:16.4-bullseye
 
 ```shell
 podman pull docker.io/library/redmine:5.1.3
