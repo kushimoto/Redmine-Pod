@@ -55,11 +55,11 @@ spec:
       name: opt-redmine-data-app-host-0
   volumes:
   - hostPath:
-      path: /opt/redmine/data/db
+      path: /opt/redmine-pod/data/db
       type: Directory
     name: opt-redmine-data-db-host-0
   - hostPath:
-      path: /opt/redmine/data/app
+      path: /opt/redmine-pod/data/app
       type: Directory
     name: opt-redmine-data-app-host-0
 
